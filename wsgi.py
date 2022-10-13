@@ -19,10 +19,11 @@ migrate = get_migrate(app)
 @app.cli.command("init", help="Creates and initializes the database")
 def initialize():
     create_db(app)
-    with open('/workspace/flaskmvc/App/students.csv', newline='') as csvfile:
+    with open('/workspace/Asg1-/App/students.csv', newline='') as csvfile:
         reader = csv.DictReader(csvfile)
     
         for row in reader:
+            print(row)
             student = Student(studID=row['\ufeffstudID'],email=row['studEmail'],password=row['studPassword'],courseR1=row['courseR1'],courseR2=row['courseR2'],courseR3=row['courseR3'],courseR4=row['courseR4'],courseR5=row['courseR5'])
             #print(student.toJSON())
             db.session.add(student)
@@ -30,11 +31,11 @@ def initialize():
 
     print('database intialized1')
 
-    with open('/workspace/flaskmvc/App/staff.csv', newline='') as csvfile:
+    with open('/workspace/Asg1-/App/staff.csv', newline='') as csvfile:
         reader1 = csv.DictReader(csvfile)
     
         for row in reader1:
-            print(row['staffEmail'])
+            print(row)
             staff = Staff(staffID=row['\ufeffstaffID'],email=row['staffEmail'],password=row['staffPassword'],course1=row['course1'],course2=row['course2'],course3=row['course3'])
             #print(student.toJSON())
             db.session.add(staff)
