@@ -3,23 +3,23 @@ from App.database import db
 from flask_login import UserMixin
 
 class User(db.Model,UserMixin):
-    userID = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True)
     email =  db.Column(db.String, nullable=False)
     password = db.Column(db.String(120), nullable=False)
     
-    def __init__(self, userID, email, password):
-        self.userID=userID
+    def __init__(self, id, email, password):
+        self.id=id
         self.email = email
         self.set_password(password)
 
     def toJSON(self):
         return{
-            'user id': self.userID,
+            'user id': self.id,
             'email': self.email,
         }
 
-    def get_id(self):
-           return (self.userID)
+    #def get_id(self):
+     #      return (self.userID)
 
     def set_password(self, password):
         """Create hashed password."""
@@ -30,7 +30,7 @@ class User(db.Model,UserMixin):
         return check_password_hash(self.password, password)
 
 class Student(User):
-    studID = db.Column(db.Integer, db.ForeignKey('user.userID'), primary_key=True)
+    studID = db.Column(db.Integer, db.ForeignKey('user.id'), primary_key=True)
     courseR1 = db.Column(db.String(120), nullable=False)
     courseR2 = db.Column(db.String(120), nullable=False)
     courseR3 = db.Column(db.String(120), nullable=False)
@@ -60,7 +60,7 @@ class Student(User):
         }
 
 class Staff(User):
-    staffID = db.Column(db.Integer,  db.ForeignKey('user.userID') ,primary_key=True)
+    staffID = db.Column(db.Integer,  db.ForeignKey('user.id') ,primary_key=True)
     course1 = db.Column(db.String(120), nullable=False)
     course2 = db.Column(db.String(120), nullable=False)
     course3 = db.Column(db.String(120), nullable=False)
@@ -68,7 +68,7 @@ class Staff(User):
 
     def __init__(self, staffID, email, password ,course1,course2,course3):
         super(Staff, self).__init__(staffID, email, password)
-        self.id=id
+        self.staffID=staffID
         self.email = email
         self.set_password(password)
         self.course1=course1
@@ -77,8 +77,8 @@ class Staff(User):
 
     def toJSON(self):
         return{
-            'id': self.id,
-            'username': self.username
+            'id': self.staffID,
+            'username': self.email
         }
 
 
