@@ -16,8 +16,8 @@ def makeRecom_action():
     db.session.commit()
     return jsonify({"message":f" {data['recomTitle']} recommendation created "})
 
-@index_views.route('/make', methods=['POST'])
-def makeRecom_action():
+@index_views.route('/view', methods=['POST'])
+def loadrecoms():
     recoms = Recommendation.query.all()
     recomlist = [Recommendation.toJSON(Recommendation) for recom in recoms]
     return jsonify(recomList)
