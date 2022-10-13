@@ -20,6 +20,10 @@ def makeRecom_action():
 
 @index_views.route('/view', methods=['POST'])
 def loadrecoms():
-    recoms = Recommendation.query.all()
-    recomlist = [Recommendation.toJSON(Recommendation) for recom in recoms]
+    data = request.json
+    recoms = Recommendation.query.filter_by(course=data["course"]).all()
+    recomlist = []
+
+    if recoms :
+        recomlist = [Recommendation.toJSON for recom in recoms]
     return jsonify(recomList)
