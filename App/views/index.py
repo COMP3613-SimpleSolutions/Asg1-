@@ -18,7 +18,7 @@ def makeRecom_action():
     db.session.commit()
     return jsonify({"message":f" {data['recomTitle']} recommendation created "})
 
-@index_views.route('/view', methods=['GET'])
+@index_views.route('/view', methods=['POST'])
 def loadrecoms():
     recomlist=[]
     data = request.json
