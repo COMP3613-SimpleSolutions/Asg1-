@@ -11,6 +11,6 @@ def makeRecom_action():
     data = request.json
     newrec = Recommendation(title=data['recomTitle'], description=data['recomDesc'], course=data['course'], comments=None, status="unchecked")
 
-    db.session.add(newrec)
-    db.session.commit()
+    #db.session.add(newrec)
+    #db.session.commit()
     return jsonify({"message":f" {data['recomTitle']} recommendation created "})
