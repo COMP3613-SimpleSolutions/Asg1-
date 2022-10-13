@@ -100,4 +100,4 @@ Test Commands
    #     sys.exit(pytest.main(["-k", "App"]))
     
 
-app.cli.add_command(test)
+#app.cli.add_command(test)
