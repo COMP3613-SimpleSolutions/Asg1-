@@ -30,7 +30,7 @@ class User(db.Model,UserMixin):
         return check_password_hash(self.password, password)
 
 class Student(User):
-    id = db.Column(db.Integer, primary_key=True)
+    sid = db.Column(db.Integer, primary_key=True)
     studID = db.Column(db.Integer, db.ForeignKey('user.id'),nullable=False)
     courseR1 = db.Column(db.String(120), nullable=False)
     courseR2 = db.Column(db.String(120), nullable=False)
