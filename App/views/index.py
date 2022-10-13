@@ -1,6 +1,8 @@
 from flask import Blueprint, redirect, render_template, request, send_from_directory, jsonify
 from App.models import User, Staff, Student, Recommendation
 
+from App.database import db
+
 index_views = Blueprint('index_views', __name__, template_folder='../templates')
 
 @index_views.route('/', methods=['GET'])
