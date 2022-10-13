@@ -18,12 +18,19 @@ def makeRecom_action():
     db.session.commit()
     return jsonify({"message":f" {data['recomTitle']} recommendation created "})
 
-@index_views.route('/view', methods=['POST'])
+@index_views.route('/view', methods=['GET'])
 def loadrecoms():
+    recomlist=[]
     data = request.json
-    recoms = Recommendation.query.filter_by(course=data["course"]).all()
-    recomlist = []
 
-    if recoms :
-        recomlist = [Recommendation.toJSON for recom in recoms]
-    return jsonify(recomList)
+    if data:
+        recoms = Recommendation.query.filter_by(course=data['course']).all()
+
+        if recoms :
+            recomlist = [Recommendation.toJSON for recom in recoms]
+            return jsonify(recomList)
+
+        else:
+            return jsonify({"message":"No recommendations found"})
+    else:
+        return jsonify({"message":"No recommendations found"})
