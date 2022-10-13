@@ -79,7 +79,10 @@ class Staff(User):
     def toJSON(self):
         return{
             'id': self.staffID,
-            'username': self.email
+            'username': self.email,
+            'course1' : self.course1,
+            'course2' : self.course2,
+            'course3' : self.course3,
         }
 
 
@@ -98,3 +101,13 @@ class Recommendation(db.Model):
         self.course=course
         self.comments=comments
         self.status=status
+
+    def toJSON(self):
+        return{
+            'id': self.recomID,
+            'title': self.title,
+            'description' : self.description,
+            'course' : self.course,
+            'comments' : self.comments,
+            'status' : self.status
+        }
