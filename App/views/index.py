@@ -37,11 +37,10 @@ def loadrecom(recomid):
     data = request.json
     recomlist=[]  
 
-    recoms = Recommendation.query.filter_by(recomID=data['recomID']).first()
+    recom = Recommendation.query.filter_by(recomID=data['recomID']).first()
 
-    if recoms :
-        recomlist = [Recommendation.toJSON(recom) for recom in recoms]
-        return jsonify(recomlist)
+    if recom :
+        return jsonify(recom.toJSON(recom))
 
     else:
         return jsonify({"message":"No recommendations found"})
