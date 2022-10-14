@@ -27,7 +27,7 @@ def loadrecoms():
 
     if recoms :
         recomlist = [Recommendation.toJSON for recom in recoms]
-        return jsonify(recomlist)
+        return recomlist
 
     else:
         return jsonify({"message":"No recommendations found"})
