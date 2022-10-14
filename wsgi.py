@@ -24,7 +24,7 @@ def initialize():
     
         for row in reader:
             print(row)
-            student = Student(studID=row['\ufeffstudID'],email=row['studEmail'],password=row['studPassword'],courseR1=row['courseR1'],courseR2=row['courseR2'],courseR3=row['courseR3'],courseR4=row['courseR4'],courseR5=row['courseR5'])
+            student = Student(studID=row['\ufeffstudID'],studemail=row['studEmail'],password=row['studPassword'],courseR1=row['courseR1'],courseR2=row['courseR2'],courseR3=row['courseR3'],courseR4=row['courseR4'],courseR5=row['courseR5'])
             #print(student.toJSON())
             db.session.add(student)
             db.session.commit()
@@ -36,7 +36,7 @@ def initialize():
     
         for row in reader1:
             print(row)
-            staff = Staff(staffID=row['\ufeffstaffID'],email=row['staffEmail'],password=row['staffPassword'],course1=row['course1'],course2=row['course2'],course3=row['course3'])
+            staff = Staff(staffID=row['\ufeffstaffID'],staffemail=row['staffEmail'],password=row['staffPassword'],course1=row['course1'],course2=row['course2'],course3=row['course3'])
             #print(student.toJSON())
             db.session.add(staff)
             db.session.commit()
