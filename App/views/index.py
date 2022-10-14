@@ -26,7 +26,7 @@ def loadrecoms():
     recoms = Recommendation.query.filter_by(course=data['course']).all()
 
     if recoms :
-        recomlist = [Recommendation.toJSON for recom in recoms]
+        recomlist = [Recommendation.toJSON(Recommendation) for recom in recoms]
         return jsonify(recomlist)
 
     else:
@@ -36,14 +36,13 @@ def loadrecoms():
 def loadrecom(recomid):
     data = request.json
     recomlist=[]  
-    if data:
-        recoms = Recommendation.query.filter_by(recomID=data['course']).first()
 
-        if recoms :
-            return jsonify(recoms.toJSON)
+    recoms = Recommendation.query.filter_by(recomID=data['course']).first()
 
-        else:
-            return jsonify({"message":"No recommendations found"})
+    if recoms :
+        recomlist = [Recommendation.toJSON(Recommendation) for recom in recoms]
+        return jsonify(recomlist)
+
     else:
         return jsonify({"message":"No recommendations found"})
 
@@ -51,16 +50,14 @@ def loadrecom(recomid):
 def acceptrecom(recomid):
     data = request.json
     recomlist=[]  
-    if data:
-        recoms = Recommendation.query.filter_by(recomID=data['recomID']).first()
 
-        if recoms :
-            recom.comments=data["comments"]
-            recom.status = "accepted"
-            return jsonify(recoms.toJSON)
+    recoms = Recommendation.query.filter_by(recomID=data['recomID']).first()
 
-        else:
-            return jsonify({"message":"No recommendations found"})
+    if recoms :
+        recom.comments=data["comments"]
+        recom.status = "accepted"
+        return jsonify(recoms.toJSON())
+
     else:
         return jsonify({"message":"No recommendations found"})
 
