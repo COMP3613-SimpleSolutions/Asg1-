@@ -4,10 +4,12 @@ from flask_login import UserMixin
 
 class User(db.Model,UserMixin):
     id = db.Column(db.Integer, primary_key=True)
+    email =  db.Column(db.String, nullable=False)
     password = db.Column(db.String(120), nullable=False)
     
-    def __init__(self, id, password):
+    def __init__(self, id, email, password):
         self.id=id
+        self.email = email
         self.set_password(password)
 
     def toJSON(self):
@@ -30,7 +32,6 @@ class User(db.Model,UserMixin):
 class Student(User):
     sid = db.Column(db.Integer, primary_key=True)
     studID = db.Column(db.Integer, db.ForeignKey('user.id'),nullable=False)
-    studemail =  db.Column(db.String, nullable=False)
     courseR1 = db.Column(db.String(120), nullable=False)
     courseR2 = db.Column(db.String(120), nullable=False)
     courseR3 = db.Column(db.String(120), nullable=False)
@@ -38,10 +39,10 @@ class Student(User):
     courseR5 = db.Column(db.String(120), nullable=True)
     user = db.relationship('User')
     
-    def __init__(self, studID, studemail, password, courseR1,courseR2,courseR3,courseR4,courseR5):
-        super(Student, self).__init__(studID, password)
+    def __init__(self, studID, email, password, courseR1,courseR2,courseR3,courseR4,courseR5):
+        super(Student, self).__init__(studID, email, password)
         self.studID=studID
-        self.studemail = studemail
+        self.email = email
         self.set_password(password)
         self.courseR1=courseR1
         self.courseR2=courseR2
@@ -61,16 +62,15 @@ class Student(User):
 
 class Staff(User):
     staffID = db.Column(db.Integer,  db.ForeignKey('user.id') ,primary_key=True)
-    staffemail =  db.Column(db.String, nullable=False)
     course1 = db.Column(db.String(120), nullable=False)
     course2 = db.Column(db.String(120), nullable=False)
     course3 = db.Column(db.String(120), nullable=False)
     user = db.relationship('User')
 
-    def __init__(self, staffID, staffemail, password ,course1,course2,course3):
-        super(Staff, self).__init__(staffID, password)
+    def __init__(self, staffID, email, password ,course1,course2,course3):
+        super(Staff, self).__init__(staffID, email, password)
         self.staffID=staffID
-        self.staffemail = staffemail
+        self.email = email
         self.set_password(password)
         self.course1=course1
         self.course2=course2
