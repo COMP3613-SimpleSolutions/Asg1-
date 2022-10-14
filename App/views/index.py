@@ -40,7 +40,7 @@ def loadrecom(recomid):
     recom = Recommendation.query.filter_by(recomID=data['recomID']).first()
 
     if recom :
-        recom=recom.toJSON(recom)
+        recom=recom.toJSON()
         return jsonify(recom)
 
     else:
