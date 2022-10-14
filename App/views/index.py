@@ -26,7 +26,7 @@ def loadrecoms():
     recoms = Recommendation.query.filter_by(course=data['course']).all()
 
     if recoms :
-        recomlist = [Recommendation.toJSON(Recommendation) for recom in recoms]
+        recomlist = [Recommendation.toJSON(recom) for recom in recoms]
         return jsonify(recomlist)
 
     else:
@@ -40,7 +40,7 @@ def loadrecom(recomid):
     recoms = Recommendation.query.filter_by(recomID=data['course']).first()
 
     if recoms :
-        recomlist = [Recommendation.toJSON(Recommendation) for recom in recoms]
+        recomlist = [Recommendation.toJSON(recom) for recom in recoms]
         return jsonify(recomlist)
 
     else:
