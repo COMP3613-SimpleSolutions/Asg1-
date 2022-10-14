@@ -22,15 +22,13 @@ def makeRecom_action():
 def loadrecoms():
     data = request.json
     recomlist=[]  
-    if data:
-        recoms = Recommendation.query.filter_by(course=data['course']).all()
 
-        if recoms :
-            recomlist = [Recommendation.toJSON for recom in recoms]
-            return jsonify(recomlist)
+    recoms = Recommendation.query.filter_by(course=data['course']).all()
 
-        else:
-            return jsonify({"message":"No recommendations found"})
+    if recoms :
+        recomlist = [Recommendation.toJSON for recom in recoms]
+        return jsonify(recomlist)
+
     else:
         return jsonify({"message":"No recommendations found"})
 
