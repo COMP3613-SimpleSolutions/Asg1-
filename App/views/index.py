@@ -83,7 +83,7 @@ def loadnotifs():
     data = request.json
     recomlist=[]  
     if data:
-        staff = Staff.query.filter_by(recomID=data['staffID']).first()
+        staff = Staff.query.filter_by(staffID=data['staffID']).first()
 
         if staff:
             staffsubs = [staff.course1,staff.course2,staff.course3]
