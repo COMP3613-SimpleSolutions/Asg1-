@@ -63,7 +63,7 @@ def acceptrecom(recomid):
 
 @index_views.route('/view/<recomid>/reject', methods=['POST'])
 def rejectrecom(recomid):
-     data = request.json
+    data = request.json
     recomlist=[]  
 
     recom = Recommendation.query.filter_by(recomID=data['recomID']).first()
