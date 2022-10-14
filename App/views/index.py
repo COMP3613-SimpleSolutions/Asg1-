@@ -53,7 +53,7 @@ def acceptrecom(recomid):
     recom = Recommendation.query.filter_by(recomID=recomid).first()
 
     if recom :
-        if data['comments']:
+        if data:
             recom.comments=data["comments"]
         recom.status = "accepted"
         recom=recom.toJSON()
