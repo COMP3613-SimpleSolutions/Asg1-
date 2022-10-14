@@ -9,6 +9,16 @@ index_views = Blueprint('index_views', __name__, template_folder='../templates')
 def index_page():
     return render_template('index.html')
 
+
+@index_views.route('/login', methods=['POST'])
+def login():
+    data = request.json
+    
+    user = User.query.filter_by(userID = data['userID']).first()
+    if user and user.check_password(data['password']):
+        login_user(user) 
+    return jsonify({"message":f" {data['userID']} logged in "})
+
 @index_views.route('/make', methods=['POST'])
 def makeRecom_action():
     data = request.json
