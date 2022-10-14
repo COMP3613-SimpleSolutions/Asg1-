@@ -37,7 +37,7 @@ def loadrecom(recomid):
     data = request.json
     recomlist=[]  
 
-    recoms = Recommendation.query.filter_by(recomID=data['course']).first()
+    recoms = Recommendation.query.filter_by(recomID=data['recomID']).first()
 
     if recoms :
         recomlist = [Recommendation.toJSON(recom) for recom in recoms]
@@ -51,30 +51,28 @@ def acceptrecom(recomid):
     data = request.json
     recomlist=[]  
 
-    recoms = Recommendation.query.filter_by(recomID=data['recomID']).first()
+    recom = Recommendation.query.filter_by(recomID=data['recomID']).first()
 
-    if recoms :
+    if recom :
         recom.comments=data["comments"]
         recom.status = "accepted"
-        return jsonify(recoms.toJSON())
+        return jsonify(recoms.toJSON(recom))
 
     else:
         return jsonify({"message":"No recommendations found"})
 
 @index_views.route('/view/<recomid>/reject', methods=['POST'])
 def rejectrecom(recomid):
-    data = request.json
+     data = request.json
     recomlist=[]  
-    if data:
-        recoms = Recommendation.query.filter_by(recomID=data['recomID']).first()
 
-        if recoms :
-            recom.comments=data["comments"]
-            recom.status = "rejected"
-            return jsonify(recoms.toJSON)
+    recom = Recommendation.query.filter_by(recomID=data['recomID']).first()
 
-        else:
-            return jsonify({"message":"No recommendations found"})
+    if recom :
+        recom.comments=data["comments"]
+        recom.status = "rejected"
+        return jsonify(recoms.toJSON(recom))
+
     else:
         return jsonify({"message":"No recommendations found"})
 
