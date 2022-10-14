@@ -14,7 +14,7 @@ def index_page():
 def login():
     data = request.json
     
-    user = User.query.filter_by(userID = data['userID']).first()
+    user = User.query.filter_by(id = data['userID']).first()
     if user and user.check_password(data['password']):
         login_user(user) 
     return jsonify({"message":f" {data['userID']} logged in "})
