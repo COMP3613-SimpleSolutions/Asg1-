@@ -49,29 +49,29 @@ def loadrecom(recomid):
 @index_views.route('/view/<recomid>/accept', methods=['POST'])
 def acceptrecom(recomid):
     data = request.json
-    recomlist=[]  
 
     recom = Recommendation.query.filter_by(recomID=data['recomID']).first()
 
     if recom :
         recom.comments=data["comments"]
         recom.status = "accepted"
-        return jsonify(recoms.toJSON(recom))
+        recom=recom.toJSON()
+        return jsonify(recom)
 
     else:
         return jsonify({"message":"No recommendations found"})
 
 @index_views.route('/view/<recomid>/reject', methods=['POST'])
 def rejectrecom(recomid):
-    data = request.json
-    recomlist=[]  
+    data = request.json 
 
     recom = Recommendation.query.filter_by(recomID=data['recomID']).first()
 
     if recom :
         recom.comments=data["comments"]
         recom.status = "rejected"
-        return jsonify(recoms.toJSON(recom))
+        recom=recom.toJSON()
+        return jsonify(recom)
 
     else:
         return jsonify({"message":"No recommendations found"})
