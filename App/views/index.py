@@ -50,7 +50,7 @@ def loadrecom(recomid):
 def acceptrecom(recomid):
     data = request.json
 
-    recom = Recommendation.query.filter_by(recomID=data['recomID']).first()
+    recom = Recommendation.query.filter_by(recomID=recomid).first()
 
     if recom :
         recom.comments=data["comments"]
@@ -65,7 +65,7 @@ def acceptrecom(recomid):
 def rejectrecom(recomid):
     data = request.json 
 
-    recom = Recommendation.query.filter_by(recomID=data['recomID']).first()
+    recom = Recommendation.query.filter_by(recomID=recomid).first()
 
     if recom :
         recom.comments=data["comments"]
