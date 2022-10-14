@@ -64,12 +64,13 @@ def acceptrecom(recomid):
 
 @index_views.route('/view/<recomid>/reject', methods=['POST'])
 def rejectrecom(recomid):
-    data = request.json 
+    ddata = request.json
 
     recom = Recommendation.query.filter_by(recomID=recomid).first()
 
     if recom :
-        recom.comments=data["comments"]
+        if data:
+            recom.comments=data["comments"]
         recom.status = "rejected"
         recom=recom.toJSON()
         return jsonify(recom)
@@ -86,14 +87,16 @@ def loadnotifs():
 
         if staff:
             staffsubs = [staff.course1,staff.course2,staff.course3]
-            if staffsubs :
-                for sub in staffsubs:
-                    recoms = Recommendation.query.filter_by(course=sub).all()
+
+            for sub in staffsubs:
+                recoms = Recommendation.query.filter_by(course=sub).all()
                 if recoms:
                     for recom in recoms:
                         if recom.status == "unchecked":
                             recomlist.append(recom)
-                    return jsonify(recomlist.toJSON)
+
+            recomslist=[Recommendation.toJSON(Recommendation) for recom in recomlist]              
+            return jsonify(recomslist)
 
         else:
             return jsonify({"message":"No recommendations found"})
