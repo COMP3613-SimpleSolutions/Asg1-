@@ -6,9 +6,8 @@ class User(db.Model,UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     password = db.Column(db.String(120), nullable=False)
     
-    def __init__(self, id, email, password):
+    def __init__(self, id, password):
         self.id=id
-        self.email = email
         self.set_password(password)
 
     def toJSON(self):
@@ -42,7 +41,7 @@ class Student(User):
     def __init__(self, studID, studemail, password, courseR1,courseR2,courseR3,courseR4,courseR5):
         super(Student, self).__init__(studID, password)
         self.studID=studID
-        self.studemail = email
+        self.studemail = studemail
         self.set_password(password)
         self.courseR1=courseR1
         self.courseR2=courseR2
