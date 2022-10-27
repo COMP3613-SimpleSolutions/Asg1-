@@ -29,17 +29,17 @@ class UserUnitTests(unittest.TestCase):
 
     # pure function no side effects or integrations called
     def test_toJSON(self):
-        user = User("bob", "bobpass")
-        user_json = user.toJSON()
-        self.assertDictEqual(user_json, {"id":None, "username":"bob"})
+        student = Student(816026077,"bob.saget@studmail.com","bobpass","COMP1600","COMP1601","COMP1602","COMP1603","COMP1604")
+        student_json = Student.toJSON()
+        self.assertDictEqual(user_json, {"id":816026077, "course1" : "COMP1600","course2" : "COMP1601","course3" : "COMP1602","course4" : "COMP1603","course5" : "COMP1604",})
     
     def test_hashed_password(self):
         password = "mypass"
         hashed = generate_password_hash(password, method='sha256')
-        user = User("bob", password)
-        assert user.password != password
+        student = Student(816026077,"bob.saget@studmail.com",password,"COMP1600","COMP1601","COMP1602","COMP1603","COMP1604")
+        assert student.password != password
 
     def test_check_password(self):
         password = "mypass"
-        user = User("bob", password)
-        assert user.check_password(password)
+        student = Student(816026077,"bob.saget@studmail.com",password,"COMP1600","COMP1601","COMP1602","COMP1603","COMP1604")
+        assert student.check_password(password)
