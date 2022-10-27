@@ -25,13 +25,13 @@ class UserUnitTests(unittest.TestCase):
 
     def test_new_user(self):
         student = Student(816026077,"bob.saget@studmail.com","bobpass","COMP1600","COMP1601","COMP1602","COMP1603","COMP1604")
-        assert student.studID == "816026077"
+        assert student.studID == 816026077
 
     # pure function no side effects or integrations called
     def test_toJSON(self):
         student = Student(816026077,"bob.saget@studmail.com","bobpass","COMP1600","COMP1601","COMP1602","COMP1603","COMP1604")
         student_json = student.toJSON()
-        self.assertDictEqual(user_json, {"id":816026077, "course1" : "COMP1600","course2" : "COMP1601","course3" : "COMP1602","course4" : "COMP1603","course5" : "COMP1604",})
+        self.assertDictEqual(student_json, {"id":816026077, "course1" : "COMP1600","course2" : "COMP1601","course3" : "COMP1602","course4" : "COMP1603","course5" : "COMP1604",})
     
     def test_hashed_password(self):
         password = "mypass"
