@@ -6,7 +6,7 @@ from flask_cors import CORS
 from werkzeug.utils import secure_filename
 from werkzeug.datastructures import  FileStorage
 from datetime import timedelta
-
+from App.models import User, Recommendation, Staff, Student
 
 from App.database import create_db
 
@@ -30,7 +30,6 @@ def add_views(app, views):
     for view in views:
         app.register_blueprint(view)
 
-
 def loadConfig(app, config):
     app.config['ENV'] = os.environ.get('ENV', 'DEVELOPMENT')
     delta = 7
@@ -49,6 +48,11 @@ def loadConfig(app, config):
     for key, value in config.items():
         app.config[key] = config[key]
 
+login_manager = LoginManager()
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(user_id)
+
 def create_app(config={}):
     app = Flask(__name__, static_url_path='/static')
     CORS(app)
@@ -61,6 +65,9 @@ def create_app(config={}):
     configure_uploads(app, photos)
     add_views(app, views)
     create_db(app)
+    login_manager.init_app(app)
     setup_jwt(app)
     app.app_context().push()
     return app
+
+
