@@ -49,7 +49,6 @@ def login():
     return jsonify({"message":f"{data['userID']} logged in "})
 
 @index_views.route('/make', methods=['POST'])
-@login_required
 def makerecom_action():
     data = request.json
 
@@ -63,7 +62,6 @@ def makerecom_action():
         return jsonigy({"message" : "User type cannot access this function"})
 
 @index_views.route('/view', methods=['GET'])
-@login_required
 def loadrecoms(): #function to load recommendations for a specific class
     data = request.json
     
@@ -77,7 +75,6 @@ def loadrecoms(): #function to load recommendations for a specific class
         return jsonify({"message":"No recommendations found"})
 
 @index_views.route('/view/<recomid>', methods=['GET'])
-@login_required
 def loadrecom(recomid):
     data = request.json
     recomlist=[]  
@@ -92,7 +89,6 @@ def loadrecom(recomid):
         return jsonify({"message":"No recommendations found"})
 
 @index_views.route('/view/<recomid>/accept', methods=['POST'])
-@login_required
 def acceptrecom(recomid):
     if isStud() == False:
         data = request.json
@@ -110,7 +106,6 @@ def acceptrecom(recomid):
         return jsonigy({"message" : "User type cannot access this function"})
 
 @index_views.route('/view/<recomid>/reject', methods=['POST'])
-@login_required
 def rejectrecom(recomid):
     data = request.json
 
@@ -128,7 +123,6 @@ def rejectrecom(recomid):
         return jsonigy({"message" : "User type cannot access this function"})
 
 @index_views.route('/notifs', methods=['GET'])
-@login_required
 def loadnotifs():
     data = request.json
 
