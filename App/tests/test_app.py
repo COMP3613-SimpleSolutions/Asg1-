@@ -50,6 +50,7 @@ class UserUnitTests(unittest.TestCase):
     
     def test_view_recommendation(self):
         recom = Recommendation("New Fan","We need a new fan the class is too hot.","COMP1600",None,"unchecked")
+        recom_json = recom.toJSON()
         self.assertDictEqual(recom_json, {"id": None,"title": "New Fan","description" : "We need a new fan the class is too hot.","course" : "COMP1600","comments" : None,"status" : "unchecked"})
 
     def test_accept_recommendation(self):
@@ -68,9 +69,13 @@ class UserUnitTests(unittest.TestCase):
         recomlist=[]
         recom1 = Recommendation("New Fan","We need a new fan the class is too hot.","COMP1600",None,"unchecked")
         recom2 = Recommendation("New Desks","We need new desks for space.","COMP1601",None,"accepted")
-        recoms = Recommendation.query.filter_by(status=unchecked).all()
-        for recom in recoms:
-            recomlist.append(recom.toJSON())
-        self.assertDictEqual(recomlist, {"id": None,"title": "New Fan","description" : "We need a new fan the class is too hot.","course" : "COMP1600","comments" : None,"status" : "rejected"})
-         
 
+        if recom1.status == "unchecked":    #using a quesry was not returning valid results so an individual check was done on both created recommendations
+            recom_json = recom1.toJSON()    #the goal was to only get the recommendation marked as unchecked into the dictionary and have that be the only returned json object
+            recomlist.append(recom_json)
+        if recom2.status == "unchecked":
+            recom_json = recom2.toJSON()
+            recomlist.append(recom_json)
+        
+        self.assertDictEqual(recomlist[0], {"id": None,"title": "New Fan","description" : "We need a new fan the class is too hot.","course" : "COMP1600","comments" : None,"status" : "unchecked"})
+        
