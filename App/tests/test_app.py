@@ -4,18 +4,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 from App.main import create_app
 from App.database import create_db
 from App.models import User, Student, Staff, Recommendation
-from App.controllers import (
-    create_staff,
-    create_student,
-    create_recom,
-    accept_recom,
-    reject_recom,
-    get_all_users_json,
-    authenticate,
-    get_user,
-    get_user_by_username,
-    update_user
-)
+
 
 from wsgi import app
 
