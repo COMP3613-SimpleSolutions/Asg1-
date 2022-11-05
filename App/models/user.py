@@ -12,7 +12,7 @@ class User(db.Model,UserMixin):
 
     def toJSON(self):
         return{
-            'user id': self.id,
+            'id': self.id,
         }
 
     #def get_id(self):

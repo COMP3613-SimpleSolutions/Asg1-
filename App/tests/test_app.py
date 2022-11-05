@@ -5,7 +5,11 @@ from App.main import create_app
 from App.database import create_db
 from App.models import User, Student, Staff, Recommendation
 from App.controllers import (
-    create_user,
+    create_staff,
+    create_student,
+    create_recom,
+    accept_recom,
+    reject_recom,
     get_all_users_json,
     authenticate,
     get_user,
@@ -33,6 +37,18 @@ class UserUnitTests(unittest.TestCase):
         student_json = student.toJSON()
         self.assertDictEqual(student_json, {"id":816026077, "course1" : "COMP1600","course2" : "COMP1601","course3" : "COMP1602","course4" : "COMP1603","course5" : "COMP1604",})
     
+    def test_student_user_login(self):
+        student = Student(816026077,"bob.saget@studmail.com","bobpass","COMP1600","COMP1601","COMP1602","COMP1603","COMP1604")
+        login_id = 816026077
+        password = "bobpass"
+        assert (login_id,True) == (student.studID,student.check_password(password))
+
+    def test_staff_user_login(self):
+        staff = Staff(216000001,"bob.ross@staffmail.com","bobpass","COMP1600","COMP1601","COMP1602")
+        login_id = 216000001
+        password = "bobpass"
+        assert (login_id,True) == (staff.staffID,staff.check_password(password))
+
     def test_hashed_password(self):
         password = "mypass"
         hashed = generate_password_hash(password, method='sha256')
@@ -79,3 +95,58 @@ class UserUnitTests(unittest.TestCase):
         
         self.assertDictEqual(recomlist[0], {"id": None,"title": "New Fan","description" : "We need a new fan the class is too hot.","course" : "COMP1600","comments" : None,"status" : "unchecked"})
         
+# This fixture creates an empty database for the test and deletes it after the test
+# scope="class" would execute the fixture once and resued for all methods in the class
+@pytest.fixture(autouse=True, scope="module")
+def empty_db():
+    app.config.update({'TESTING': True, 'SQLALCHEMY_DATABASE_URI': 'sqlite:///test.db'})
+    create_db(app)
+    yield app.test_client()
+    os.unlink(os.getcwd()+'/App/test.db')
+
+
+def test_authenticate_student():
+    student = create_student(816026077,"bob.saget@studmail.com","bobpass","COMP1600","COMP1601","COMP1602","COMP1603","COMP1604")
+    assert authenticate(816026077, "bobpass") != None
+
+def test_authenticate_staff():
+    staff = create_staff(216000001,"bob.ross@staffmail.com","bobpass","COMP1600","COMP1601","COMP1602")
+    assert authenticate(216000001, "bobpass") != None
+
+class UsersIntegrationTests(unittest.TestCase):
+
+    def test_create_student(self):
+        student = create_student(816026078,"john.stamos@studmail.com","johnpass","COMP1601","COMP1602","COMP1603","COMP1604","INFO1600")
+        assert student.id == 816026078
+
+    def test_get_all_users_json(self):
+        users_json = get_all_users_json()
+        self.assertListEqual([{"id":216000001}, {"id":816026077}, {"id":816026078}], users_json)
+
+    def test_create_recommendation(self):
+        recom = create_recom("New Fan","We need a new fan the class is too hot.","COMP1600",None,"unchecked")
+        assert recom.title == "New Fan"
+    
+    # Tests data changes in the database
+    def test_accept_recommendation(self):
+        recom = create_recom("New Fan","We need a new fan the class is too hot.","COMP1600",None,"unchecked")
+        accept_recom(recom.recomID,None)
+        assert recom.status == "accepted"
+
+    def test_reject_recommendation(self):
+        recom = create_recom("New Fan","We need a new fan the class is too hot.","COMP1600",None,"unchecked")
+        reject_recom(recom.recomID,None)
+        assert recom.status == "rejected"
+    
+    def test_accepted_recommendation_commented(self):
+        recom = create_recom("New Fan","We need a new fan the class is too hot.","COMP1600",None,"unchecked")
+        accept_recom(recom.recomID,"fair point")
+        assert recom.comments == "fair point"
+
+    def test_rejected_recommendation_commented(self):
+        recom = create_recom("New Fan","We need a new fan the class is too hot.","COMP1600",None,"unchecked")
+        reject_recom(recom.recomID,"Does not make sense")
+        assert recom.comments == "Does not make sense"
+   
+
+

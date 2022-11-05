@@ -6,22 +6,6 @@ from App.database import db
 
 index_views = Blueprint('index_views', __name__, template_folder='../templates')
 
-def loadstud(): #loads student courses
-  student = Student.query.filter_by(studID=current_user.userID).first()
-  subs=[student.courseR1,student.courseR2,student.courseR3,student.courseR4,student.courseR5]
-  return subs
-
-def loadstaff(): #loads staff courses
-  staff = Staff.query.filter_by(staffID=current_user.userID).first()
-  subs=[staff.course1,staff.course2,staff.course3]
-  return subs
-
-def isStud(): #determines if logged in user is a student or not
-  if current_user.userID >= 800000000:
-    return True
-  else:
-    return False
-
 @index_views.route('/', methods=['GET'])
 def index_page():
     return render_template('index.html')
@@ -42,12 +26,12 @@ def login():
 
 @index_views.route('/make', methods=['POST'])
 @login_required
-def makeRecom_action():
+def makerecom_action():
     data = request.json
 
     if isStud() == True:
         newrec = Recommendation(title=data['recomTitle'], description=data['recomDesc'], course=data['course'], comments=None, status="unchecked")
-        
+
         db.session.add(newrec)
         db.session.commit()
         return jsonify({"message":f" {data['recomTitle']} recommendation created "})
@@ -58,12 +42,11 @@ def makeRecom_action():
 @login_required
 def loadrecoms(): #function to load recommendations for a specific class
     data = request.json
-    recomlist=[]  
-
-    recoms = Recommendation.query.filter_by(course=data['course']).all()
-
-    if recoms :
-        recomlist = [Recommendation.toJSON(recom) for recom in recoms]
+    
+    course = data['course']
+    recomlist = load_recoms_bycourse(course)
+    
+    if recomlist:
         return jsonify(recomlist)
 
     else:
@@ -93,9 +76,7 @@ def acceptrecom(recomid):
         recom = Recommendation.query.filter_by(recomID=recomid).first()
 
         if recom :
-            if data:
-                recom.comments=data["comments"]
-            recom.status = "accepted"
+            accept_recom(recom.recomID)
             recom=recom.toJSON()
             return jsonify(recom)
 
@@ -113,9 +94,7 @@ def rejectrecom(recomid):
         recom = Recommendation.query.filter_by(recomID=recomid).first()
 
         if recom :
-            if data:
-                recom.comments=data["comments"]
-            recom.status = "rejected"
+            reject_recom(recom.recomID)
             recom=recom.toJSON()
             return jsonify(recom)
 

@@ -4,7 +4,7 @@ from flask.cli import with_appcontext, AppGroup
 
 from App.database import create_db, get_migrate, db
 from App.main import create_app
-from App.controllers import ( create_user, get_all_users_json, get_all_users )
+from App.controllers import ( create_student,create_staff, get_all_users_json, get_all_users )
 
 import csv
 from App.models import User, Staff, Student
