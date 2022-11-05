@@ -46,11 +46,7 @@ def login():
     if user and user.check_password(data['password']):
         login_user(user) 
     
-    if isStud() :
-        utype = "Student"
-    else : 
-        utype = "Staff"
-    return jsonify({"message":f"{utype} {data['userID']} logged in "})
+    return jsonify({"message":f"{data['userID']} logged in "})
 
 @index_views.route('/make', methods=['POST'])
 @login_required
