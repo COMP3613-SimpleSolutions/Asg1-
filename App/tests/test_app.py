@@ -50,7 +50,7 @@ class UserUnitTests(unittest.TestCase):
     
     def test_view_recommendation(self):
         recom = Recommendation("New Fan","We need a new fan the class is too hot.","COMP1600",None,"unchecked")
-         self.assertDictEqual(recom_json, {"id": None,"title": "New Fan","description" : "We need a new fan the class is too hot.","course" : "COMP1600","comments" : None,"status" : "unchecked"})
+        self.assertDictEqual(recom_json, {"id": None,"title": "New Fan","description" : "We need a new fan the class is too hot.","course" : "COMP1600","comments" : None,"status" : "unchecked"})
 
     def test_accept_recommendation(self):
         recom = Recommendation("New Fan","We need a new fan the class is too hot.","COMP1600",None,"unchecked")
