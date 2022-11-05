@@ -38,19 +38,5 @@ def update_user(id, username):
         return db.session.commit()
     return None
 
-def loadstud(): #loads student courses
-  student = Student.query.filter_by(studID=current_user.userID).first()
-  subs=[student.courseR1,student.courseR2,student.courseR3,student.courseR4,student.courseR5]
-  return subs
 
-def loadstaff(): #loads staff courses
-  staff = Staff.query.filter_by(staffID=current_user.userID).first()
-  subs=[staff.course1,staff.course2,staff.course3]
-  return subs
-
-def isStud(): #determines if logged in user is a student or not
-  if current_user.userID >= 800000000:
-    return True
-  else:
-    return False
     
