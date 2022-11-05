@@ -50,7 +50,7 @@ def loadConfig(app, config):
 
 login_manager = LoginManager()
 @login_manager.user_loader
-def load_user(user_id):
+def load_user(id):
     return User.query.get(user_id)
 
 def create_app(config={}):
