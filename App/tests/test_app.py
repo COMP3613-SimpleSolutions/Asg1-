@@ -43,3 +43,34 @@ class UserUnitTests(unittest.TestCase):
         password = "mypass"
         student = Student(816026077,"bob.saget@studmail.com",password,"COMP1600","COMP1601","COMP1602","COMP1603","COMP1604")
         assert student.check_password(password)
+
+    def test_new_recommendation(self):
+        recom = Recommendation("New Fan","We need a new fan the class is too hot.","COMP1600",None,"unchecked")
+        assert recom.title == "New Fan"
+    
+    def test_view_recommendation(self):
+        recom = Recommendation("New Fan","We need a new fan the class is too hot.","COMP1600",None,"unchecked")
+         self.assertDictEqual(recom_json, {"id": None,"title": "New Fan","description" : "We need a new fan the class is too hot.","course" : "COMP1600","comments" : None,"status" : "unchecked"})
+
+    def test_accept_recommendation(self):
+        recom = Recommendation("New Fan","We need a new fan the class is too hot.","COMP1600",None,"unchecked")
+        recom.status = "accepted"
+        recom_json = recom.toJSON()
+        self.assertDictEqual(recom_json, {"id": None,"title": "New Fan","description" : "We need a new fan the class is too hot.","course" : "COMP1600","comments" : None,"status" : "accepted"})
+
+    def test_reject_recommendation(self):
+        recom = Recommendation("New Fan","We need a new fan the class is too hot.","COMP1600",None,"unchecked")
+        recom.status = "rejected"
+        recom_json = recom.toJSON()
+        self.assertDictEqual(recom_json, {"id": None,"title": "New Fan","description" : "We need a new fan the class is too hot.","course" : "COMP1600","comments" : None,"status" : "rejected"})
+         
+    def test_view_notifications(self):
+        recomlist=[]
+        recom1 = Recommendation("New Fan","We need a new fan the class is too hot.","COMP1600",None,"unchecked")
+        recom2 = Recommendation("New Desks","We need new desks for space.","COMP1601",None,"accepted")
+        recoms = Recommendation.query.filter_by(status=unchecked).all()
+        for recom in recoms:
+            recomlist.append(recom.toJSON())
+        self.assertDictEqual(recomlist, {"id": None,"title": "New Fan","description" : "We need a new fan the class is too hot.","course" : "COMP1600","comments" : None,"status" : "rejected"})
+         
+
