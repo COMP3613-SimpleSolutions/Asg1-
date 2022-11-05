@@ -11,7 +11,10 @@ from App.controllers import (
     authenticate,
     get_user,
     get_user_by_username,
-    update_user
+    update_user,
+    isStud,
+    loadstud,
+    loadstaff
 )
 
 from App.database import db
