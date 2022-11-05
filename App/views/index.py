@@ -46,7 +46,9 @@ def login():
     if user and user.check_password(data['password']):
         login_user(user) 
     
-    return jsonify({"message":f"{data['userID']} logged in "})
+        return jsonify({"message":f"{data['userID']} logged in "})
+    else:
+        return jsonify({"message" :"Could not log in/ Incorrect credentials"})
 
 @index_views.route('/make', methods=['POST'])
 def makerecom_action():
