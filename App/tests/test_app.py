@@ -30,27 +30,20 @@ LOGGER = logging.getLogger(__name__)
 '''
 class UserUnitTests(unittest.TestCase):
 
-    def test_new_user(self):
+    def test_new_student(self):
         student = Student(816026077,"bob.saget@studmail.com","bobpass","COMP1600","COMP1601","COMP1602","COMP1603","COMP1604")
         assert student.studID == 816026077
+
+    def test_new_staff(self):
+        staff = Staff(216000001,"bob.ross@staffmail.com","bobpass","COMP1600","COMP1601","COMP1602")
+        assert staff.staffID == 216000001
+
 
     # pure function no side effects or integrations called
     def test_toJSON(self):
         student = Student(816026077,"bob.saget@studmail.com","bobpass","COMP1600","COMP1601","COMP1602","COMP1603","COMP1604")
         student_json = student.toJSON()
         self.assertDictEqual(student_json, {"id":816026077, "course1" : "COMP1600","course2" : "COMP1601","course3" : "COMP1602","course4" : "COMP1603","course5" : "COMP1604",})
-    
-    def test_student_user_login(self):
-        student = Student(816026077,"bob.saget@studmail.com","bobpass","COMP1600","COMP1601","COMP1602","COMP1603","COMP1604")
-        login_id = 816026077
-        password = "bobpass"
-        assert (login_id,True) == (student.studID,student.check_password(password))
-
-    def test_staff_user_login(self):
-        staff = Staff(216000001,"bob.ross@staffmail.com","bobpass","COMP1600","COMP1601","COMP1602")
-        login_id = 216000001
-        password = "bobpass"
-        assert (login_id,True) == (staff.staffID,staff.check_password(password))
 
     def test_hashed_password(self):
         password = "mypass"
