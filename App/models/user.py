@@ -59,7 +59,7 @@ class Student(User):
         }
 
 class Staff(User):
-    staffID = db.Column(db.Integer,  db.ForeignKey('user.id') ,primary_key=True)
+    staffID = db.Column(db.Integer,  db.ForeignKey('user.userID') ,primary_key=True)
     staffemail=db.Column(db.String, nullable=False)
     course1 = db.Column(db.String(120), nullable=False)
     course2 = db.Column(db.String(120), nullable=False)
