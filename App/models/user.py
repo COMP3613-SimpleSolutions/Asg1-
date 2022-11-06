@@ -15,9 +15,6 @@ class User(db.Model,UserMixin):
             'id': self.id,
         }
 
-    def get_id(self):
-        return (self.id)
-
     def set_password(self, password):
         """Create hashed password."""
         self.password = generate_password_hash(password, method='sha256')
