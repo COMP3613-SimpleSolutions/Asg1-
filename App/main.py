@@ -6,7 +6,7 @@ from flask_cors import CORS
 from werkzeug.utils import secure_filename
 from werkzeug.datastructures import  FileStorage
 from datetime import timedelta
-from App.models import User, Recommendation, Staff, Student
+
 
 from App.database import create_db
 
@@ -30,6 +30,7 @@ def add_views(app, views):
     for view in views:
         app.register_blueprint(view)
 
+
 def loadConfig(app, config):
     app.config['ENV'] = os.environ.get('ENV', 'DEVELOPMENT')
     delta = 7
@@ -37,7 +38,7 @@ def loadConfig(app, config):
         app.config.from_object('App.config')
         delta = app.config['JWT_EXPIRATION_DELTA']
     else:
-        app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('SQLALCHEMY_DATABASE_URI')
+        app.config[''] = os.environ.get('SQLALCHEMY_DATABASE_URI')
         app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
         app.config['DEBUG'] = os.environ.get('ENV').upper() != 'PRODUCTION'
         app.config['ENV'] = os.environ.get('ENV')
@@ -48,9 +49,9 @@ def loadConfig(app, config):
     for key, value in config.items():
         app.config[key] = config[key]
 
-login_manager = LoginManager()
-@login_manager.user_loader
-def load_user(id):
+login_manager = LoginManager() 
+@login_manager.user_loader 
+def load_user(id): 
     return User.query.get(userID)
 
 def create_app(config={}):
@@ -69,5 +70,3 @@ def create_app(config={}):
     setup_jwt(app)
     app.app_context().push()
     return app
-
-
