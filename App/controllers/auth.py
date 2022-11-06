@@ -4,7 +4,7 @@ from App.models import User, Student
 
 
 def authenticate(id, password):
-    user = User.query.filter_by(userid=id).first()
+    user = User.query.filter_by(id=id).first()
     if user :
         print("found")
     if user and user.check_password(password):

@@ -3,20 +3,17 @@ from App.database import db
 from flask_login import UserMixin
 
 class User(db.Model,UserMixin):
-    userid = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True)
     password = db.Column(db.String(120), nullable=False)
     #email omitted from User class to allow for use of sql.alchemy user based functions
     def __init__(self, id, password):
-        self.userid=id
+        self.id=id
         self.set_password(password)
 
     def toJSON(self):
         return{
-            'id': self.userid,
+            'id': self.id,
         }
-
-    def get_id(self):
-           return (self.userID)
 
     def set_password(self, password):
         """Create hashed password."""
@@ -28,7 +25,7 @@ class User(db.Model,UserMixin):
 
 class Student(User):
     sid = db.Column(db.Integer, primary_key=True)
-    studID = db.Column(db.Integer, db.ForeignKey('user.userid'),nullable=False)
+    studID = db.Column(db.Integer, db.ForeignKey('user.id'),nullable=False)
     studemail=db.Column(db.String, nullable=False)
     courseR1 = db.Column(db.String(120), nullable=False)
     courseR2 = db.Column(db.String(120), nullable=False)
@@ -59,7 +56,7 @@ class Student(User):
         }
 
 class Staff(User):
-    staffID = db.Column(db.Integer,  db.ForeignKey('user.userid') ,primary_key=True)
+    staffID = db.Column(db.Integer,  db.ForeignKey('user.id') ,primary_key=True)
     staffemail=db.Column(db.String, nullable=False)
     course1 = db.Column(db.String(120), nullable=False)
     course2 = db.Column(db.String(120), nullable=False)
@@ -73,7 +70,7 @@ class Staff(User):
         self.course1=course1
         self.course2=course2
         self.course3=course3
-        super(Staff, self).__init__(staffID, password)
+        super(staff, self).__init__(staffID, password)
 
     def toJSON(self):
         return{
