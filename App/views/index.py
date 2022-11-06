@@ -42,12 +42,14 @@ def index_page():
 def login():
     data = request.json
     
-    user = User.query.filter_by(id = data['userID']).first()
-    if user:
-        print("User exists")
-    if user and user.check_password(data['password']):
-        login_user(user) 
+    #user = User.query.filter_by(id = data['userID']).first()
+    #if user:
+    #    print("User exists")
+    #if user and user.check_password(data['password']):
+    #   login_user(user) 
     
+    student = Student.query.filter_by(studID = data['userID']).first()
+    if student and student.check_password(data['password']):
         return jsonify({"message":f"{data['userID']} logged in "})
     else:
         return jsonify({"message" :"Could not log in/ Incorrect credentials"})
