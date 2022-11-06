@@ -43,6 +43,7 @@ def login():
     data = request.json
     
     user = User.query.filter_by(id = data['userID']).first()
+    print(data['userID'])
     if user:
         print("User exists")
     if user and user.check_password(data['password']):
