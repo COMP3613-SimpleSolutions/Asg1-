@@ -43,7 +43,6 @@ def login():
     data = request.json
     
     user = User.query.filter_by(id = data['userID']).first()
-    print(data['userID'])
     if user:
         print("User exists")
     if user and user.check_password(data['password']):
@@ -52,6 +51,11 @@ def login():
         return jsonify({"message":f"{data['userID']} logged in "})
     else:
         return jsonify({"message" :"Could not log in/ Incorrect credentials"})
+
+@index_views.route('/loadusers',methods=['GET'])
+def loadall():
+    users = get_all_users_json()
+    return jsonify(users)
 
 @index_views.route('/make', methods=['POST'])
 def makerecom_action():
