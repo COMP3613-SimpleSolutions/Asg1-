@@ -5,6 +5,20 @@ from App.main import create_app
 from App.database import create_db
 from App.models import User, Student, Staff, Recommendation
 
+from App.controllers import (
+    create_staff,
+    create_student,
+    create_recom,
+    accept_recom,
+    reject_recom,
+    get_all_users_json,
+    authenticate,
+    get_user,
+    get_user_by_username,
+    update_user
+)
+
+
 
 from wsgi import app
 
@@ -106,7 +120,7 @@ class UsersIntegrationTests(unittest.TestCase):
 
     def test_create_student(self):
         student = create_student(816026078,"john.stamos@studmail.com","johnpass","COMP1601","COMP1602","COMP1603","COMP1604","INFO1600")
-        assert student.id == 816026078
+        assert student.studID == 816026078
 
     def test_get_all_users_json(self):
         users_json = get_all_users_json()
