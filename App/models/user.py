@@ -35,7 +35,6 @@ class Student(User):
     user = db.relationship('User')
     
     def __init__(self, studID, studemail, password, courseR1,courseR2,courseR3,courseR4,courseR5):
-        super(Student, self).__init__(studID, password)
         self.studID=studID
         self.studemail = studemail
         self.set_password(password)
@@ -44,6 +43,7 @@ class Student(User):
         self.courseR3=courseR3
         self.courseR4=courseR4
         self.courseR5=courseR5
+        super(Student, self).__init__(studID, password)
 
     def toJSON(self):
         return{
@@ -64,13 +64,13 @@ class Staff(User):
     user = db.relationship('User')
 
     def __init__(self, staffID, staffemail, password ,course1,course2,course3):
-        super(Staff, self).__init__(staffID, password)
         self.staffID=staffID
         self.staffemail = staffemail
         self.set_password(password)
         self.course1=course1
         self.course2=course2
         self.course3=course3
+        super(Staff, self).__init__(staffID, password)
 
     def toJSON(self):
         return{
