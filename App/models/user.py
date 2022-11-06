@@ -70,7 +70,7 @@ class Staff(User):
         self.course1=course1
         self.course2=course2
         self.course3=course3
-        super(staff, self).__init__(staffID, password)
+        super(Staff, self).__init__(staffID, password)
 
     def toJSON(self):
         return{
