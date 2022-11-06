@@ -19,17 +19,17 @@ from App.database import db
 index_views = Blueprint('index_views', __name__, template_folder='../templates')
 
 def loadstud(): #loads student courses
-  student = Student.query.filter_by(studID=current_user.userID).first()
+  student = Student.query.filter_by(studID=current_user.id).first()
   subs=[student.courseR1,student.courseR2,student.courseR3,student.courseR4,student.courseR5]
   return subs
 
 def loadstaff(): #loads staff courses
-  staff = Staff.query.filter_by(staffID=current_user.userID).first()
+  staff = Staff.query.filter_by(staffID=current_user.id).first()
   subs=[staff.course1,staff.course2,staff.course3]
   return subs
 
 def isStud(): #determines if logged in user is a student or not
-  if current_user.userID >= 800000000:
+  if current_user.id >= 800000000:
     return True
   else:
     return False
@@ -42,7 +42,7 @@ def index_page():
 def login():
     data = request.json
     
-    user = User.query.filter_by(userID = data['userID']).first()
+    user = User.query.filter_by(id = data['userID']).first()
     if user:
         print("User exists")
     if user and user.check_password(data['password']):
