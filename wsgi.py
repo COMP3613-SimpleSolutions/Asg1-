@@ -29,6 +29,10 @@ def initialize():
             db.session.add(student)
             db.session.commit()
 
+            user = User(id = student.studID,password = student.password)
+            db.session.add(user)
+            db.session.commit()
+
     print('database intialized1')
 
     with open('/workspace/Asg1-/App/staff.csv', newline='') as csvfile:
@@ -39,6 +43,10 @@ def initialize():
             staff = Staff(staffID=row['\ufeffstaffID'],staffemail=row['staffEmail'],password=row['staffPassword'],course1=row['course1'],course2=row['course2'],course3=row['course3'])
             #print(student.toJSON())
             db.session.add(staff)
+            db.session.commit()
+
+            user = User(id = staff.staffID,password = staff.password)
+            db.session.add(user)
             db.session.commit()
 
     print('database intialized2')
