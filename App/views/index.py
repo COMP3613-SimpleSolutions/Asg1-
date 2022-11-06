@@ -1,6 +1,6 @@
 from flask import Blueprint, redirect, render_template, request, send_from_directory, jsonify
 from App.models import User, Staff, Student, Recommendation
-from flask_login import current_user, login_required, login_user
+from flask_login import  LoginManager, current_user, login_user, login_required
 from App.controllers import (
     create_staff,
     create_student,
