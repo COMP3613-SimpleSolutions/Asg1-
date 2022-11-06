@@ -3,17 +3,20 @@ from App.database import db
 from flask_login import UserMixin
 
 class User(db.Model,UserMixin):
-    id = db.Column(db.Integer, primary_key=True)
+    userID = db.Column(db.Integer, primary_key=True)
     password = db.Column(db.String(120), nullable=False)
     #email omitted from User class to allow for use of sql.alchemy user based functions
     def __init__(self, userid, password):
-        self.id=userid
+        self.userID=userid
         self.set_password(password)
 
     def toJSON(self):
         return{
-            'id': self.id,
+            'id': self.userID,
         }
+
+    def get_id(self):
+        return (self.userID)
 
     def set_password(self, password):
         """Create hashed password."""
@@ -25,7 +28,7 @@ class User(db.Model,UserMixin):
 
 class Student(User):
     sid = db.Column(db.Integer, primary_key=True)
-    studID = db.Column(db.Integer, db.ForeignKey('user.id'),nullable=False)
+    studID = db.Column(db.Integer, db.ForeignKey('user.userID'),nullable=False)
     studemail=db.Column(db.String, nullable=False)
     courseR1 = db.Column(db.String(120), nullable=False)
     courseR2 = db.Column(db.String(120), nullable=False)
