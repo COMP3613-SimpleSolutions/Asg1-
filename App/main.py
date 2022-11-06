@@ -51,7 +51,7 @@ def loadConfig(app, config):
 login_manager = LoginManager()
 @login_manager.user_loader
 def load_user(id):
-    return User.query.get(user_id)
+    return User.query.get(id)
 
 def create_app(config={}):
     app = Flask(__name__, static_url_path='/static')
